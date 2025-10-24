@@ -1,5 +1,4 @@
 import json
-from typing_extensions import Doc, List
 import requests
 from urllib.parse import urljoin
 
@@ -354,7 +353,17 @@ class DataBase():
         self.session = requests.session()
 
     def getAttributeViewKeys(self):
-        """ 通过视图ID获取属性值
+        """
+        通过视图ID获取属性值
+
+        Args:
+            None
+
+        Returns:
+            字段属性JSON
+
+        Example:
+            getAttributeViewKeys():
         """
         url = urljoin(self.url, "api/av/getAttributeViewKeysByAvID")
         data = {
@@ -364,14 +373,9 @@ class DataBase():
         res.raise_for_status()
         return json.loads(res.content)
     
-    def fname():
-        pass
-
-    def getAttributeViewPrimaryKeyValues():
+    def getAttributeViewPrimaryKeyValues(self):
         """
         获取属性视图主键值
-
-        Detailed description.
 
         Args:
             argument_name: type and description.
@@ -390,14 +394,16 @@ class DataBase():
         渲染数据库
 
         Args:
-            argument_name: type and description.
+            view_id: str, 数据库视图ID
+            block_id: str, 块ID
+            query: str, 检索命令
+            page_size: int, 默认50行数据，获取数据数量
 
         Returns:
-            type and description of the returned object.
+            返回数据库视图中所有数据
 
         Example:
-            # Description of my example.
-            use_it_this_way(arg1, arg2)
+            renderAttributeView("20251022141749-fmw1vuj", "20251022141744-y6s3vtn", "", page_size=10)
         """
         url = urljoin(self.url, "api/av/renderAttributeView")
         data = {
@@ -412,7 +418,21 @@ class DataBase():
         res.raise_for_status()
         return json.loads(res.content)
 
-    def appendAttributeViewDetachedBlocksWithValues(self, blocksValues: DataBaseBlocks):
+    def appendAttributeViewDetachedBlocksWithValues(self, blocks_values: DataBaseBlocks):
+        """
+        在数据库中自动创建一行，并且添加值
+
+        Args:
+            blocks_values: DataBaseBlocks, 数据库添加数据，通过DataBaseBlocks类拼接
+
+        Returns:
+            返回状态
+
+        Example:
+            dbb1 = database.DataBaseBlocks()
+            appendAttributeViewDetachedBlocksWithValues(dbb1.getBlocksValues())
+        """
+
         """ 在数据库中自动创建一行，并且添加值
         """
         url = urljoin(self.url, "api/av/appendAttributeViewDetachedBlocksWithValues")
