@@ -1,3 +1,4 @@
+import siyuan
 import database
 
 if __name__ == '__main__':
