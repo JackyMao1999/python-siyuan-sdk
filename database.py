@@ -344,6 +344,21 @@ class DataBaseBlocks():
             blocks_values = getBlocksValues()
         """
         return self.__blocks_values
+    
+    def clearBlocksValues(self):
+        """
+        清空数据库字段值
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Example:
+           clearBlocksValues()
+        """
+        self.__blocks_values.clear()
 
 class DataBase():
     def __init__(self, sy:SiYuan, av_id:str) -> None:
@@ -438,7 +453,7 @@ class DataBase():
         url = urljoin(self.url, "api/av/appendAttributeViewDetachedBlocksWithValues")
         data = {
             "avID": self.av_id,
-            "blocksValues": [blocksValues]
+            "blocksValues": [blocks_values]
         }
         res = self.session.post(url, headers=self.headers, json=data, timeout=5)
         res.raise_for_status()
